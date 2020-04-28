@@ -25,6 +25,7 @@ namespace WindowsFormsApp3
         private void Randoom_Click(object sender, EventArgs e)
         {
             //рандомное заполнение массива
+            
             Random R = new Random();
             if (i <=2)
             {
@@ -36,6 +37,10 @@ namespace WindowsFormsApp3
             {
                 massiv.Columns[j].Width = 20;
                 massiv.Rows[0].Cells[j].Value =R.Next(0, 100);
+            }
+            for (int j = 1; j < i; j++)
+            {
+                massiv.Rows[0].Cells[j].Style.BackColor = Color.White;
             }
         }
 
@@ -90,7 +95,7 @@ namespace WindowsFormsApp3
             {
                 massiv.Rows[0].Cells[j].Style.BackColor = Color.White;
             }
-                //сортировка вставками
+            //сортировка вставками
             if (i < 2)
             {
                 this.ColvoMass_Click(sender, e);
@@ -99,17 +104,20 @@ namespace WindowsFormsApp3
             {
                 for (int j = 1; j < i; j++)
                 {
-                    massiv.Rows[0].Cells[j].Style.BackColor = Color.Green;
+                    
                     timer.Enabled = true;
                     for (int k = j; k > 0 && (int.Parse(massiv.Rows[0].Cells[k - 1].Value.ToString()) > int.Parse(massiv.Rows[0].Cells[k].Value.ToString())); k--)
                     {
+                        Thread.Sleep(100);
                         massiv.Rows[0].Cells[j].Style.BackColor = Color.Green;
                         string tmp = massiv.Rows[0].Cells[k - 1].Value.ToString();
                         massiv.Rows[0].Cells[k - 1].Value = massiv.Rows[0].Cells[k].Value;
                         massiv.Rows[0].Cells[k].Value = tmp;
                         timer.Enabled = true;
                     }
+                    massiv.Rows[0].Cells[j-1 ].Style.BackColor = Color.Green;
                 }
+                massiv.Rows[0].Cells[i - 1].Style.BackColor = Color.Green;
             }
         }
 
@@ -132,6 +140,8 @@ namespace WindowsFormsApp3
             if (proverka(sender, e)) {
                 for (int j = 1; j < i; j++)
                 {
+                    massiv.Rows[0].Cells[j].Style.BackColor = Color.Yellow;
+                    Thread.Sleep(100);
                     if (int.Parse(massiv.Rows[0].Cells[j - 1].Value.ToString()) > int.Parse(massiv.Rows[0].Cells[j].Value.ToString()))
                     {
                         int key = int.Parse(massiv.Rows[0].Cells[j].Value.ToString());
@@ -139,6 +149,7 @@ namespace WindowsFormsApp3
                         while (lo < hi)
                         {
                             int mid = lo + ((hi - lo) / 2);
+                            massiv.Rows[0].Cells[mid].Style.BackColor = Color.Yellow;
                             if (key < int.Parse(massiv.Rows[0].Cells[mid].Value.ToString()))
                             {
                                 hi = mid;
@@ -147,18 +158,22 @@ namespace WindowsFormsApp3
                             {
                                 lo = mid + 1;
                             }
-                            timer.Enabled = true;
-                            
+                            Thread.Sleep(100);
+                            //timer.Enabled = true;
+                            massiv.Rows[0].Cells[mid].Style.BackColor = Color.Green;
                         }
-                        massiv.Rows[0].Cells[j].Style.BackColor = Color.Green;
+                        
                         for (int jj = j; jj > lo; jj--)
                         {
                             massiv.Rows[0].Cells[jj].Value = massiv.Rows[0].Cells[jj - 1].Value.ToString();
                             timer.Enabled = true;
+                            Thread.Sleep(100);
                         }
                         massiv.Rows[0].Cells[lo].Value = key;
+                       // massiv.Rows[0].Cells[lo].Style.BackColor = Color.Green;
 
                     }
+                    massiv.Rows[0].Cells[j].Style.BackColor = Color.Green;
                 }
             }
         }
